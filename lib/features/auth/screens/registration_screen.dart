@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import '../providers/auth_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/glass_container.dart';
+import '../../../core/widgets/app_logo.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -46,9 +47,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Create Account', style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 8),
-                        const Text('Join the premium productivity network', style: TextStyle(color: AppColors.textGrey)),
+                        // Premium App Logo
+                        const AppLogo(size: 60),
                         const SizedBox(height: 48),
                         
                         _buildInputField(_nameController, 'Full Name', Icons.person_outline),

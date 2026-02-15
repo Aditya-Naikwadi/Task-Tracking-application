@@ -36,7 +36,7 @@ class TaskTrackApp extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     
     return MaterialApp(
-      title: 'Task Track',
+      title: 'LvlUp',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       home: authProvider.isAuthenticated 

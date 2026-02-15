@@ -8,6 +8,7 @@ import '../../../core/widgets/glass_container.dart';
 import '../../tasks/models/task_model.dart';
 import '../../tasks/widgets/create_task_dialog.dart';
 import '../../tasks/screens/task_detail_screen.dart';
+import '../../../core/widgets/app_logo.dart';
 import '../widgets/productivity_chart.dart';
 import '../widgets/category_distribution_chart.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +41,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leadingWidth: 70,
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: AppLogo(size: 40, showText: false),
+        ),
         title: Row(
           children: [
             CircleAvatar(

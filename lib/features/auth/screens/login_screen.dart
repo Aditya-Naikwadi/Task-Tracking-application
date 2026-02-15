@@ -5,6 +5,7 @@ import '../providers/auth_provider.dart';
 import 'registration_screen.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/glass_container.dart';
+import '../../../core/widgets/app_logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -59,30 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Logo / Icon
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [AppColors.tealGlow],
-                          color: AppColors.surface,
-                        ),
-                        child: const Icon(
-                          Icons.track_changes,
-                          size: 64,
-                          color: AppColors.teal,
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      Text(
-                        'Welcome Back',
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Securely access your tasks and goals',
-                        style: TextStyle(color: AppColors.textSecondary),
-                      ),
+                      // Premium App Logo
+                      const AppLogo(size: 80),
                       const SizedBox(height: 48),
                       
                       GlassContainer(

@@ -1,6 +1,6 @@
-# ⚡ TaskTrack - Elite Student Productivity
+# ⚡ LvlUp - Elite Student Productivity
 
-TaskTrack is a premium, cross-platform productivity application built for students who want to master their time and stay accountable. Combining a sleek **Glassmorphic UI** with **Gamified Progress**, TaskTrack transforms mundane task management into an engaging journey.
+LvlUp is a premium, cross-platform productivity application built for students who want to master their time and stay accountable. Combining a sleek **Glassmorphic UI** with **Gamified Progress**, LvlUp transforms mundane task management into an engaging journey.
 
 ![App Header](https://via.placeholder.com/800x400/00E5FF/000000?text=TaskTrack+-+Master+Your+Time)
 
