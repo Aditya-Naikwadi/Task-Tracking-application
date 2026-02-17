@@ -4,8 +4,23 @@ import 'package:flutter/material.dart';
 import '../features/auth/models/user_model.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseAuth get _auth {
+    try {
+      return FirebaseAuth.instance;
+    } catch (e) {
+      debugPrint('FirebaseAuth.instance access failed: $e');
+      rethrow;
+    }
+  }
+
+  FirebaseFirestore get _firestore {
+    try {
+      return FirebaseFirestore.instance;
+    } catch (e) {
+      debugPrint('FirebaseFirestore.instance access failed: $e');
+      rethrow;
+    }
+  }
 
   // Auth State Stream
   Stream<User?> get user => _auth.authStateChanges();
@@ -22,15 +37,17 @@ class AuthService {
         email: email,
         password: password,
       );
-      
+
       if (credential.user != null) {
-        await createUserProfile(UserModel(
-          uid: credential.user!.uid,
-          email: email,
-          fullName: fullName,
-          role: role,
-          createdAt: DateTime.now(),
-        ));
+        await createUserProfile(
+          UserModel(
+            uid: credential.user!.uid,
+            email: email,
+            fullName: fullName,
+            role: role,
+            createdAt: DateTime.now(),
+          ),
+        );
       }
       return credential;
     } catch (e) {

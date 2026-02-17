@@ -24,8 +24,12 @@ class NotificationService {
       },
     );
 
-    // Request permissions
-    await FirebaseMessaging.instance.requestPermission();
+    // Request permissions safely
+    try {
+      await FirebaseMessaging.instance.requestPermission();
+    } catch (e) {
+      debugPrint('Firebase Messaging not initialized: $e');
+    }
   }
 
   static Future<void> showLocalNotification({

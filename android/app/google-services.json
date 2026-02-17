@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "385616839176",
+    "project_id": "lvlup-165ac",
+    "storage_bucket": "lvlup-165ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385616839176:android:dba1592c5d596c4750c7bd",
+        "android_client_info": {
+          "package_name": "com.antigravity.task_track_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyMRzfZvew-NrSkihBVqXONl4wH1uKmkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

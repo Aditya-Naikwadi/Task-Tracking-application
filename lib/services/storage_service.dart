@@ -4,7 +4,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
 
 class StorageService {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
+  FirebaseStorage get _storage {
+    try {
+      return FirebaseStorage.instance;
+    } catch (e) {
+      debugPrint('FirebaseStorage.instance access failed: $e');
+      rethrow;
+    }
+  }
 
   Future<String?> uploadTaskAttachment(String taskId, File file) async {
     try {

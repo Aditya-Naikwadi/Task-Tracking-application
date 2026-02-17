@@ -10,14 +10,15 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.init();
-  // Note: Firebase.initializeApp() will be configured via platform-specific settings
-  // For now, wrapping in try-catch to allow UI development without crash
+  // Initialize Firebase first
   try {
     await Firebase.initializeApp();
   } catch (e) {
     debugPrint('Firebase not initialized yet: $e');
   }
+
+  // Initialize notifications after Firebase
+  await NotificationService.init();
 
   runApp(
     MultiProvider(

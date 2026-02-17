@@ -1,8 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../features/tasks/models/task_model.dart';
 
 class TaskRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseFirestore get _firestore {
+    try {
+      return FirebaseFirestore.instance;
+    } catch (e) {
+      debugPrint(
+        'FirebaseFirestore.instance access failed in TaskRepository: $e',
+      );
+      rethrow;
+    }
+  }
+
   final String _collection = 'tasks';
 
   // Create Task
