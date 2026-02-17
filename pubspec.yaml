@@ -35,7 +35,9 @@ dependencies:
   firebase_core: any
   firebase_auth: any
   cloud_firestore: any
+  firebase_storage: any
   firebase_messaging: any
+  path: any
   provider: any
   google_fonts: any
   flutter_local_notifications: any
