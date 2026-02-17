@@ -28,10 +28,13 @@ class TaskRepository {
         .where('ownerId', isEqualTo: userId)
         .snapshots();
 
+    // For now, returning owned stream. In production, combine with assignedStream
+    /*
     final assignedStream = _firestore
         .collection(_collection)
         .where('assignedTo', arrayContains: userId)
         .snapshots();
+    */
 
     // In a real production app, you might use RxDart for better stream combining
     // For now, we return the owned stream as primary, but we'll modify TaskProvider to handle both
@@ -43,14 +46,14 @@ class TaskRepository {
   // Add Comment
   Future<void> addComment(String taskId, Map<String, dynamic> comment) async {
     await _firestore.collection(_collection).doc(taskId).update({
-      'comments': FieldValue.arrayUnion([comment])
+      'comments': FieldValue.arrayUnion([comment]),
     });
   }
 
   // Add Attachment URL
   Future<void> addAttachment(String taskId, String url) async {
     await _firestore.collection(_collection).doc(taskId).update({
-      'attachments': FieldValue.arrayUnion([url])
+      'attachments': FieldValue.arrayUnion([url]),
     });
   }
 }

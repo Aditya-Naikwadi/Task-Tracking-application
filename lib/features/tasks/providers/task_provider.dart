@@ -14,8 +14,10 @@ class TaskProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   // Filtered Tasks
-  List<TaskModel> get pendingTasks => _tasks.where((t) => t.status != TaskStatus.completed).toList();
-  List<TaskModel> get completedTasks => _tasks.where((t) => t.status == TaskStatus.completed).toList();
+  List<TaskModel> get pendingTasks =>
+      _tasks.where((t) => t.status != TaskStatus.completed).toList();
+  List<TaskModel> get completedTasks =>
+      _tasks.where((t) => t.status == TaskStatus.completed).toList();
 
   void init(String userId) {
     _isLoading = true;
@@ -28,7 +30,7 @@ class TaskProvider with ChangeNotifier {
 
   Future<void> addTask(TaskModel task) async {
     await _repository.createTask(task);
-    
+
     // Schedule notification for 5 minutes before deadline
     final scheduleTime = task.deadline.subtract(const Duration(minutes: 5));
     if (scheduleTime.isAfter(DateTime.now())) {
@@ -43,19 +45,19 @@ class TaskProvider with ChangeNotifier {
 
   Future<int> toggleTaskStatus(TaskModel task) async {
     final isCompleting = task.status != TaskStatus.completed;
-    final newStatus = isCompleting 
-        ? TaskStatus.completed
-        : TaskStatus.pending;
-    
+    final newStatus = isCompleting ? TaskStatus.completed : TaskStatus.pending;
+
     await _repository.updateTask(task.copyWith(status: newStatus));
-    
+
     if (isCompleting) {
       // Award XP based on priority
       switch (task.priority) {
-        case TaskPriority.high: return 50;
-        case TaskPriority.medium: return 30;
-        case TaskPriority.low: return 10;
-        default: return 10;
+        case TaskPriority.high:
+          return 50;
+        case TaskPriority.medium:
+          return 30;
+        case TaskPriority.low:
+          return 10;
       }
     }
     return 0;
@@ -98,10 +100,13 @@ class TaskProvider with ChangeNotifier {
     if (task.lastTimerUpdate != null) {
       spent = now.difference(task.lastTimerUpdate!).inSeconds;
     }
-    
+
     final updatedTask = task.copyWith(
       isTimerRunning: false,
-      remainingSeconds: (task.remainingSeconds - spent).clamp(0, task.totalTimerSeconds),
+      remainingSeconds: (task.remainingSeconds - spent).clamp(
+        0,
+        task.totalTimerSeconds,
+      ),
       lastTimerUpdate: null,
     );
     await _repository.updateTask(updatedTask);
@@ -115,7 +120,10 @@ class TaskProvider with ChangeNotifier {
         final now = DateTime.now();
         final elapsed = now.difference(_tasks[i].lastTimerUpdate!).inSeconds;
         _tasks[i] = _tasks[i].copyWith(
-          remainingSeconds: (_tasks[i].remainingSeconds - elapsed).clamp(0, _tasks[i].totalTimerSeconds),
+          remainingSeconds: (_tasks[i].remainingSeconds - elapsed).clamp(
+            0,
+            _tasks[i].totalTimerSeconds,
+          ),
           lastTimerUpdate: now,
         );
         changed = true;

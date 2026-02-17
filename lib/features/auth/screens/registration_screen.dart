@@ -29,12 +29,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         children: [
           // Background Glows
           Positioned(
-            top: -100, right: -100,
-            child: Container(width: 300, height: 300, decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.teal.withValues(alpha: 0.15))),
+            top: -100,
+            right: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.teal.withValues(alpha: 0.15),
+              ),
+            ),
           ),
           Positioned(
-            bottom: -100, left: -100,
-            child: Container(width: 300, height: 300, decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.orange.withValues(alpha: 0.1))),
+            bottom: -100,
+            left: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.orange.withValues(alpha: 0.1),
+              ),
+            ),
           ),
           SafeArea(
             child: Center(
@@ -50,14 +66,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // Premium App Logo
                         const AppLogo(size: 60),
                         const SizedBox(height: 48),
-                        
-                        _buildInputField(_nameController, 'Full Name', Icons.person_outline),
+
+                        _buildInputField(
+                          _nameController,
+                          'Full Name',
+                          Icons.person_outline,
+                        ),
                         const SizedBox(height: 16),
-                        _buildInputField(_emailController, 'Student Email', Icons.email_outlined),
+                        _buildInputField(
+                          _emailController,
+                          'Student Email',
+                          Icons.email_outlined,
+                        ),
                         const SizedBox(height: 16),
-                        _buildInputField(_passwordController, 'Password', Icons.lock_outline, isPassword: true),
+                        _buildInputField(
+                          _passwordController,
+                          'Password',
+                          Icons.lock_outline,
+                          isPassword: true,
+                        ),
                         const SizedBox(height: 16),
-                        
+
                         // Role Selection
                         GlassContainer(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -66,24 +95,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               value: _selectedRole,
                               isExpanded: true,
                               dropdownColor: AppColors.backgroundPearl,
-                              style: const TextStyle(color: AppColors.textPrimary),
-                              items: ['Student', 'Faculty', 'Project Owner'].map((role) {
-                                return DropdownMenuItem(value: role, child: Text(role));
-                              }).toList(),
-                              onChanged: (val) => setState(() => _selectedRole = val!),
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                              ),
+                              items: ['Student', 'Faculty', 'Project Owner']
+                                  .map((role) {
+                                    return DropdownMenuItem(
+                                      value: role,
+                                      child: Text(role),
+                                    );
+                                  })
+                                  .toList(),
+                              onChanged: (val) =>
+                                  setState(() => _selectedRole = val!),
                             ),
                           ),
                         ),
-                        
+
                         const SizedBox(height: 32),
                         SizedBox(
                           width: double.infinity,
                           height: 56,
                           child: ElevatedButton(
-                            onPressed: authProvider.isLoading ? null : _handleRegister,
-                            child: authProvider.isLoading 
-                              ? const CircularProgressIndicator(color: AppColors.background)
-                              : const Text('SIGN UP', style: TextStyle(fontSize: 16, letterSpacing: 1.2)),
+                            onPressed: authProvider.isLoading
+                                ? null
+                                : _handleRegister,
+                            child: authProvider.isLoading
+                                ? const CircularProgressIndicator(
+                                    color: AppColors.background,
+                                  )
+                                : const Text(
+                                    'SIGN UP',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      letterSpacing: 1.2,
+                                    ),
+                                  ),
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -94,7 +141,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               text: "Already have an account? ",
                               style: TextStyle(color: AppColors.textGrey),
                               children: [
-                                TextSpan(text: 'Login', style: TextStyle(color: AppColors.teal, fontWeight: FontWeight.bold)),
+                                TextSpan(
+                                  text: 'Login',
+                                  style: TextStyle(
+                                    color: AppColors.teal,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -111,7 +164,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget _buildInputField(TextEditingController controller, String hint, IconData icon, {bool isPassword = false}) {
+  Widget _buildInputField(
+    TextEditingController controller,
+    String hint,
+    IconData icon, {
+    bool isPassword = false,
+  }) {
     return GlassContainer(
       child: TextFormField(
         controller: controller,
@@ -123,7 +181,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(vertical: 18),
         ),
-        validator: (value) => value != null && value.isNotEmpty ? null : 'Field required',
+        validator: (value) =>
+            value != null && value.isNotEmpty ? null : 'Field required',
       ),
     );
   }
@@ -137,11 +196,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           fullName: _nameController.text.trim(),
           role: _selectedRole,
         );
-        if (mounted) Navigator.pop(context);
+        if (!mounted) return;
+        Navigator.pop(context);
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-        }
+        if (!mounted) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     }
   }

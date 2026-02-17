@@ -1,6 +1,6 @@
 enum TaskPriority { high, medium, low }
 
-enum TaskCategory { work, personal, health, social, finance, other }
+enum TaskCategory { work, personal, health, social, finance, education, other }
 
 enum TaskStatus { pending, inProgress, completed, overdue }
 
@@ -76,8 +76,8 @@ class TaskModel {
       totalTimerSeconds: map['totalTimerSeconds'] ?? 0,
       remainingSeconds: map['remainingSeconds'] ?? 0,
       isTimerRunning: map['isTimerRunning'] ?? false,
-      lastTimerUpdate: map['lastTimerUpdate'] != null 
-          ? DateTime.parse(map['lastTimerUpdate']) 
+      lastTimerUpdate: map['lastTimerUpdate'] != null
+          ? DateTime.parse(map['lastTimerUpdate'])
           : null,
       tags: List<String>.from(map['tags'] ?? []),
       attachments: List<String>.from(map['attachments'] ?? []),

@@ -13,7 +13,7 @@ class CategoryDistributionChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskProvider = Provider.of<TaskProvider>(context);
     final tasks = taskProvider.tasks;
-    
+
     if (tasks.isEmpty) return const SizedBox.shrink();
 
     // Group tasks by category
@@ -72,23 +72,36 @@ class CategoryDistributionChart extends StatelessWidget {
         Container(
           width: 12,
           height: 12,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: _getCategoryColor(category)),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _getCategoryColor(category),
+          ),
         ),
         const SizedBox(width: 4),
-        Text(category.name.toUpperCase(), style: const TextStyle(fontSize: 10, color: AppColors.textGrey)),
+        Text(
+          category.name.toUpperCase(),
+          style: const TextStyle(fontSize: 10, color: AppColors.textGrey),
+        ),
       ],
     );
   }
 
   Color _getCategoryColor(TaskCategory category) {
     switch (category) {
-      case TaskCategory.work: return AppColors.teal;
-      case TaskCategory.personal: return AppColors.orange;
-      case TaskCategory.health: return const Color(0xFFFF5252);
-      case TaskCategory.finance: return const Color(0xFFFFD740);
-      case TaskCategory.education: return const Color(0xFF7C4DFF);
-      case TaskCategory.other: return AppColors.textGrey;
-      default: return AppColors.teal;
+      case TaskCategory.work:
+        return AppColors.teal;
+      case TaskCategory.personal:
+        return AppColors.orange;
+      case TaskCategory.health:
+        return const Color(0xFFFF5252);
+      case TaskCategory.social:
+        return const Color(0xFFE91E63);
+      case TaskCategory.finance:
+        return const Color(0xFFFFD740);
+      case TaskCategory.education:
+        return const Color(0xFF7C4DFF);
+      case TaskCategory.other:
+        return AppColors.textGrey;
     }
   }
 }

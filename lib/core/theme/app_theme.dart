@@ -18,8 +18,14 @@ class AppTheme {
       ),
       textTheme: GoogleFonts.outfitTextTheme(
         const TextTheme(
-          displayLarge: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold),
-          displayMedium: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+          displayLarge: TextStyle(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+          displayMedium: TextStyle(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
           bodyLarge: TextStyle(color: AppColors.textPrimary),
           bodyMedium: TextStyle(color: AppColors.textSecondary),
         ),
@@ -29,15 +35,20 @@ class AppTheme {
           backgroundColor: AppColors.teal,
           foregroundColor: AppColors.background,
           textStyle: const TextStyle(fontWeight: FontWeight.bold),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           elevation: 5,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppColors.teal.withValues(alpha: 0.1), width: 1),
+          side: BorderSide(
+            color: AppColors.teal.withValues(alpha: 0.1),
+            width: 1,
+          ),
         ),
         elevation: 0,
       ),
@@ -50,7 +61,10 @@ class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.teal.withValues(alpha: 0.1), width: 1),
+          borderSide: BorderSide(
+            color: AppColors.teal.withValues(alpha: 0.1),
+            width: 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

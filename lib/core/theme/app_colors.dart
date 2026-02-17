@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary background colors
   static const Color background = Color(0xFF0A0A0A);
+  static const Color backgroundPearl = Color(0xFF1A1A2E);
   static const Color surface = Color(0xFF161616);
   static const Color surfaceLight = Color(0xFF222222);
 
   // Accent colors
   static const Color teal = Color(0xFF00E5FF);
   static const Color orange = Color(0xFFFF9100);
-  
+
   // Text colors
   static const Color textPrimary = Colors.white;
   static const Color textSecondary = Color(0xFFB0B0B0);

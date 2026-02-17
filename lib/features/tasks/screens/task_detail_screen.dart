@@ -50,7 +50,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     final authProvider = Provider.of<AuthProvider>(context);
     final taskProvider = Provider.of<TaskProvider>(context);
     // Find the latest task state from provider if it exists
-    final currentTask = taskProvider.tasks.firstWhere((t) => t.id == widget.task.id, orElse: () => widget.task);
+    final currentTask = taskProvider.tasks.firstWhere(
+      (t) => t.id == widget.task.id,
+      orElse: () => widget.task,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -75,40 +78,62 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
             // Status & Category Badges
             Row(
               children: [
-                _buildBadge(currentTask.category.name.toUpperCase(), AppColors.teal),
+                _buildBadge(
+                  currentTask.category.name.toUpperCase(),
+                  AppColors.teal,
+                ),
                 const SizedBox(width: 8),
-                _buildBadge(currentTask.priority.name.toUpperCase(), _getPriorityColor(currentTask.priority)),
+                _buildBadge(
+                  currentTask.priority.name.toUpperCase(),
+                  _getPriorityColor(currentTask.priority),
+                ),
               ],
             ),
             const SizedBox(height: 24),
             Text(
               currentTask.title,
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Text(
-              currentTask.description.isEmpty ? 'No description provided.' : currentTask.description,
-              style: const TextStyle(color: AppColors.textSecondary, fontSize: 16),
+              currentTask.description.isEmpty
+                  ? 'No description provided.'
+                  : currentTask.description,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 16,
+              ),
             ),
             const SizedBox(height: 32),
-            
+
             // Timer Card
             GlassContainer(
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  const Text('Focus Timer', style: TextStyle(color: AppColors.textSecondary)),
+                  const Text(
+                    'Focus Timer',
+                    style: TextStyle(color: AppColors.textSecondary),
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     _formatDuration(_displaySeconds),
-                    style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold, letterSpacing: 4),
+                    style: const TextStyle(
+                      fontSize: 48,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 4,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _TimerButton(
-                        icon: currentTask.isTimerRunning ? Icons.pause : Icons.play_arrow,
+                        icon: currentTask.isTimerRunning
+                            ? Icons.pause
+                            : Icons.play_arrow,
                         label: currentTask.isTimerRunning ? 'PAUSE' : 'START',
                         color: AppColors.teal,
                         onPressed: () {
@@ -127,7 +152,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         label: 'RESET',
                         color: AppColors.textGrey,
                         onPressed: () {
-                           // Reset logic can be added to TaskProvider
+                          // Reset logic can be added to TaskProvider
                         },
                       ),
                     ],
@@ -136,25 +161,53 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             // Collaboration & Details
-            _buildInfoTile(Icons.calendar_today, 'Deadline', DateFormat('MMMM dd, yyyy - hh:mm a').format(currentTask.deadline)),
-            _buildInfoTile(Icons.person_outline, 'Assigned to', currentTask.assignedTo.isEmpty ? 'Only me' : currentTask.assignedTo.join(', ')),
-            _buildInfoTile(Icons.label_outline, 'Tags', currentTask.tags.isEmpty ? 'No tags' : currentTask.tags.join(', ')),
-            
+            _buildInfoTile(
+              Icons.calendar_today,
+              'Deadline',
+              DateFormat(
+                'MMMM dd, yyyy - hh:mm a',
+              ).format(currentTask.deadline),
+            ),
+            _buildInfoTile(
+              Icons.person_outline,
+              'Assigned to',
+              currentTask.assignedTo.isEmpty
+                  ? 'Only me'
+                  : currentTask.assignedTo.join(', '),
+            ),
+            _buildInfoTile(
+              Icons.label_outline,
+              'Tags',
+              currentTask.tags.isEmpty
+                  ? 'No tags'
+                  : currentTask.tags.join(', '),
+            ),
+
             const SizedBox(height: 24),
-            const Text('Attachments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text(
+              'Attachments',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 12),
             if (currentTask.attachments.isNotEmpty)
               _buildAttachmentList(currentTask.attachments),
             _buildAttachmentButton(taskProvider, currentTask.id),
-            
+
             const SizedBox(height: 24),
-            const Text('Comments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text(
+              'Comments',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 12),
             if (currentTask.comments.isNotEmpty)
               _buildCommentList(currentTask.comments),
-            _buildCommentPlaceHolder(authProvider.user?.email ?? 'Unknown', taskProvider, currentTask.id),
+            _buildCommentPlaceHolder(
+              authProvider.user?.email ?? 'Unknown',
+              taskProvider,
+              currentTask.id,
+            ),
           ],
         ),
       ),
@@ -163,16 +216,33 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   Widget _buildAttachmentList(List<String> attachments) {
     return Column(
-      children: attachments.map((url) => Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Row(
-          children: [
-            const Icon(Icons.file_present, color: AppColors.teal, size: 16),
-            const SizedBox(width: 8),
-            Expanded(child: Text(url.split('/').last, style: const TextStyle(fontSize: 12, color: AppColors.textGrey), overflow: TextOverflow.ellipsis)),
-          ],
-        ),
-      )).toList(),
+      children: attachments
+          .map(
+            (url) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.file_present,
+                    color: AppColors.teal,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      url.split('/').last,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textGrey,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -184,7 +254,14 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
-      child: Text(text, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
@@ -198,8 +275,17 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: const TextStyle(color: AppColors.textGrey, fontSize: 12)),
-              Text(value, style: const TextStyle(color: AppColors.textPrimary, fontSize: 15)),
+              Text(
+                label,
+                style: const TextStyle(color: AppColors.textGrey, fontSize: 12),
+              ),
+              Text(
+                value,
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 15,
+                ),
+              ),
             ],
           ),
         ],
@@ -215,7 +301,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     _commentController.clear();
   }
 
-  Widget _buildCommentPlaceHolder(String userId, TaskProvider provider, String taskId) {
+  Widget _buildCommentPlaceHolder(
+    String userId,
+    TaskProvider provider,
+    String taskId,
+  ) {
     return GlassContainer(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -255,7 +345,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               const CircleAvatar(
                 radius: 12,
                 backgroundColor: AppColors.teal,
-                child: Icon(Icons.person, size: 14, color: AppColors.background),
+                child: Icon(
+                  Icons.person,
+                  size: 14,
+                  color: AppColors.background,
+                ),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -264,11 +358,18 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   children: [
                     Text(
                       comment['userId'].split('@')[0], // Simple display name
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.teal),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.teal,
+                      ),
                     ),
                     Text(
                       comment['content'],
-                      style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ],
                 ),
@@ -280,9 +381,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     );
   }
 
-  Widget _buildAttachmentButton() {
+  Widget _buildAttachmentButton(TaskProvider provider, String taskId) {
     return InkWell(
-      onTap: () {},
+      onTap: () {}, // This could be implemented with a file picker
       child: GlassContainer(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: const Row(
@@ -290,7 +391,13 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           children: [
             Icon(Icons.add_a_photo_outlined, color: AppColors.teal, size: 20),
             SizedBox(width: 8),
-            Text('Add Attachment', style: TextStyle(color: AppColors.teal, fontWeight: FontWeight.bold)),
+            Text(
+              'Add Attachment',
+              style: TextStyle(
+                color: AppColors.teal,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),
@@ -305,9 +412,12 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   Color _getPriorityColor(TaskPriority priority) {
     switch (priority) {
-      case TaskPriority.high: return AppColors.error;
-      case TaskPriority.medium: return AppColors.orange;
-      case TaskPriority.low: return AppColors.teal;
+      case TaskPriority.high:
+        return AppColors.error;
+      case TaskPriority.medium:
+        return AppColors.orange;
+      case TaskPriority.low:
+        return AppColors.teal;
     }
   }
 }
@@ -340,7 +450,10 @@ class _TimerButton extends StatelessWidget {
           children: [
             Icon(icon, color: color, size: 20),
             const SizedBox(width: 8),
-            Text(label, style: TextStyle(color: color, fontWeight: FontWeight.bold)),
+            Text(
+              label,
+              style: TextStyle(color: color, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),

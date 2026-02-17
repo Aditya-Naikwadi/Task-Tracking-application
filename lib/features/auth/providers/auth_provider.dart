@@ -52,7 +52,7 @@ class AuthProvider with ChangeNotifier {
         email: email,
         password: password,
         fullName: fullName,
-        role: role
+        role: role,
       );
     } catch (e) {
       rethrow;
@@ -64,18 +64,16 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> addXP(int amount) async {
     if (_userData == null || _user == null) return;
-    
+
     int newXP = _userData!.xp + amount;
-    int currentLevel = _userData!.level;
-    
     // Simple level up logic: level up every 500 XP
     int newLevel = (newXP / 500).floor() + 1;
-    
+
     await _authService.updateUserData(_user!.uid, {
       'xp': newXP,
       'level': newLevel,
     });
-    
+
     // Update local state
     _userData = _userData!.copyWith(xp: newXP, level: newLevel);
     notifyListeners();

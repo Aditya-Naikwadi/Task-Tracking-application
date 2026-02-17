@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
 
@@ -12,7 +13,7 @@ class StorageService {
       final uploadTask = await ref.putFile(file);
       return await uploadTask.ref.getDownloadURL();
     } catch (e) {
-      print('Upload Error: $e');
+      debugPrint('Upload Error: $e');
       return null;
     }
   }
@@ -21,7 +22,7 @@ class StorageService {
     try {
       await _storage.refFromURL(url).delete();
     } catch (e) {
-      print('Delete Attachment Error: $e');
+      debugPrint('Delete Attachment Error: $e');
     }
   }
 }

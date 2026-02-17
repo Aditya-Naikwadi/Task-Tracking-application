@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Premium App Logo
                       const AppLogo(size: 80),
                       const SizedBox(height: 48),
-                      
+
                       GlassContainer(
                         padding: const EdgeInsets.all(24),
                         child: Column(
@@ -72,7 +72,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: _emailController,
                               decoration: const InputDecoration(
                                 hintText: 'Email Address',
-                                prefixIcon: Icon(Icons.email_outlined, color: AppColors.teal),
+                                prefixIcon: Icon(
+                                  Icons.email_outlined,
+                                  color: AppColors.teal,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 16),
@@ -81,7 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: true,
                               decoration: const InputDecoration(
                                 hintText: 'Password',
-                                prefixIcon: Icon(Icons.lock_outline, color: AppColors.teal),
+                                prefixIcon: Icon(
+                                  Icons.lock_outline,
+                                  color: AppColors.teal,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 32),
@@ -89,15 +95,36 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: double.infinity,
                               height: 56,
                               child: ElevatedButton(
-                                onPressed: authProvider.isLoading 
-                                  ? null 
-                                  : () => authProvider.login(
-                                      _emailController.text, 
-                                      _passwordController.text
-                                    ),
+                                onPressed: authProvider.isLoading
+                                    ? null
+                                    : () async {
+                                        try {
+                                          await authProvider.login(
+                                            _emailController.text,
+                                            _passwordController.text,
+                                          );
+                                        } catch (e) {
+                                          if (!mounted) return;
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            SnackBar(
+                                              content: Text(e.toString()),
+                                            ),
+                                          );
+                                        }
+                                      },
                                 child: authProvider.isLoading
-                                  ? const CircularProgressIndicator(color: AppColors.background)
-                                  : const Text('LOGIN', style: TextStyle(fontSize: 16, letterSpacing: 1.2)),
+                                    ? const CircularProgressIndicator(
+                                        color: AppColors.background,
+                                      )
+                                    : const Text(
+                                        'LOGIN',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          letterSpacing: 1.2,
+                                        ),
+                                      ),
                               ),
                             ),
                           ],
@@ -107,14 +134,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextButton(
                         onPressed: () => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+                          MaterialPageRoute(
+                            builder: (context) => const RegistrationScreen(),
+                          ),
                         ),
                         child: RichText(
                           text: const TextSpan(
                             text: "Don't have an account? ",
                             style: TextStyle(color: AppColors.textSecondary),
                             children: [
-                              TextSpan(text: 'Sign Up', style: TextStyle(color: AppColors.teal, fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                text: 'Sign Up',
+                                style: TextStyle(
+                                  color: AppColors.teal,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                         ),
